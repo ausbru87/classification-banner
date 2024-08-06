@@ -6,6 +6,7 @@ from Xlib import X
 
 def on_configure_event(window, event, data):
     # Adjust the window properties when resized or moved
+    print("on_configure_event called")
     screen = window.get_screen()
     monitors = []
     nmons = screen.get_display().get_n_monitors()
