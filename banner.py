@@ -37,6 +37,13 @@ def main ():
                             Gtk.get_minor_version(),
                             Gtk.get_micro_version()))
 
+    message = "UNCLASSIFIED // FOUO"
+    fgcolor = "#FFFFFF"
+    bgcolor = "#007A33"
+    font = "Liberation-sans"
+    size = "large"
+    weight = "bold"
+
     # (a) Create an undecorated dock
     window = Gtk.Window()
     window.set_name("bar")
@@ -51,6 +58,17 @@ def main ():
       Gdk.Screen.get_default(),
       style_provider,
       Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
+    
+    # (b) Add a label to the center of the bar
+    center_label = Gtk.Label(
+       "<span font_family='%s' weight='%s' foreground='%s' size='%s'>%s</span>" % (
+          font, weight, fgcolor, size, message))
+    center_label.set_use_markup(True)
+    center_label.set_justify(Gtk.Justification.CENTER)
+    center_label.set_yalign(1.0)
+    window.add(center_label)
+
+    window_width, window_height = window.get_size()
 
     # the screen contains all monitors
     screen = window.get_screen()
