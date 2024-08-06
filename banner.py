@@ -28,7 +28,7 @@ window#bar {
 """
 
 #  the size of the bar (its height), in pixels
-bar_size = 50
+bar_size = 25
 
 def main ():
 
