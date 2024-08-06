@@ -89,7 +89,10 @@ def main():
             font, weight, fgcolor, size, message))
     center_label.set_use_markup(True)
     center_label.set_justify(Gtk.Justification.CENTER)
-    center_label.set_yalign(1.0)
+    center_label.set_yalign(0.5)
+    center_label.set_xalign(0.5)
+    center_label.set_hexpand(True)
+    center_label.set_vexpand(True)
     window.add(center_label)
     window.show_all()
 
