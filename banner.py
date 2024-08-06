@@ -8,7 +8,7 @@ def on_configure_event(window, event, data):
     # Adjust the window properties when resized or moved
     screen = window.get_screen()
     monitors = []
-    nmons = screen.get_display().get_n_monitors()
+    nmons = screen.get_n_monitors()
     for m in range(nmons):
         mg = screen.get_monitor_geometry(m)
         monitors.append(mg)
