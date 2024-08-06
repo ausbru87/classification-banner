@@ -4,9 +4,17 @@ from gi.repository import Gtk, Gdk
 from Xlib.display import Display
 from Xlib import X
 
+# Flag to prevent continuous handling of configure-event
+handling_configure_event = False
+
 def on_configure_event(window, event, data):
+    global handling_configure_event
+    if handling_configure_event:
+        return
+
+    handling_configure_event = True
+
     # Adjust the window properties when resized or moved
-    print("on_configure_event called")
     screen = window.get_screen()
     monitors = []
     nmons = screen.get_display().get_n_monitors()
@@ -40,6 +48,8 @@ def on_configure_event(window, event, data):
                          display.intern_atom('CARDINAL'), 32,
                          [0, 0, data['bar_size'] + status_bar_height, 0, 0, 0, 0, 0, x, x + width - 1, 0, 0],
                          X.PropModeReplace)
+
+    handling_configure_event = False
 
 def main():
     print("Gtk %d.%d.%d" % (Gtk.get_major_version(),
