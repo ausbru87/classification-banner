@@ -116,11 +116,11 @@ def main ():
     # http://python-xlib.sourceforge.net/doc/html/python-xlib_21.html#SEC20
     topw.change_property(display.intern_atom('_NET_WM_STRUT'),
                            display.intern_atom('CARDINAL'), 32,
-                           [0, 0, bar_size, 0 ],
+                           [0, 0, bar_size + status_bar_height, 0 ],
                            X.PropModeReplace)
     topw.change_property(display.intern_atom('_NET_WM_STRUT_PARTIAL'),
                            display.intern_atom('CARDINAL'), 32,
-                           [0, 0, bar_size, 0, 0, 0, 0, 0, x, x+width-1, 0, 0],
+                           [0, 0, bar_size + status_bar_height, 0, 0, 0, 0, 0, x, x+width-1, 0, 0],
                            X.PropModeReplace)
 
 
