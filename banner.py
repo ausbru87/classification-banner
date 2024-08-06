@@ -93,6 +93,11 @@ def main ():
     print("monitor %d: %d x %d (current, offset %d)" % (curmon,width,height,x))
     print("bar: start=%d end=%d" % (x,x+width-1))
 
+    # Adjust y position to be below status bar
+    status_bar_height = 24
+    y += status_bar_height
+
+
     # display bar along the top of the current monitor
     window.move(x,y)
     window.resize(width,bar_size)
