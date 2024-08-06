@@ -23,12 +23,12 @@ from Xlib import X
 # Colour style for (b)
 stylesheet=b"""
 window#bar {
-  background-color: darkred;
+  background-color: #007A33;
 }
 """
 
 #  the size of the bar (its height), in pixels
-bar_size = 10
+bar_size = 50
 
 def main ():
 
