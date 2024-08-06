@@ -4,16 +4,7 @@ from gi.repository import Gtk, Gdk
 from Xlib.display import Display
 from Xlib import X
 
-# Flag to prevent continuous handling of configure-event
-handling_configure_event = False
-
 def on_configure_event(window, event, data):
-    global handling_configure_event
-    if handling_configure_event:
-        return
-
-    handling_configure_event = True
-
     # Adjust the window properties when resized or moved
     screen = window.get_screen()
     monitors = []
@@ -22,34 +13,37 @@ def on_configure_event(window, event, data):
         mg = screen.get_monitor_geometry(m)
         monitors.append(mg)
 
-    curmon = screen.get_monitor_at_window(screen.get_active_window())
-    x = monitors[curmon].x
-    y = monitors[curmon].y
-    width = monitors[curmon].width
-    height = monitors[curmon].height
-
-    # Adjust y position to be below the status bar
-    status_bar_height = 24  # Adjust this value as needed
-    y += status_bar_height
-
-    # Move and resize the window
-    window.move(x, y)
-    window.resize(width, data['bar_size'])
-
-    # Reserve space (a "strut") for the bar
     display = Display()
     topw = display.create_resource_object('window',
                                           window.get_toplevel().get_window().get_xid())
-    topw.change_property(display.intern_atom('_NET_WM_STRUT'),
-                         display.intern_atom('CARDINAL'), 32,
-                         [0, 0, data['bar_size'] + status_bar_height, 0],
-                         X.PropModeReplace)
-    topw.change_property(display.intern_atom('_NET_WM_STRUT_PARTIAL'),
-                         display.intern_atom('CARDINAL'), 32,
-                         [0, 0, data['bar_size'] + status_bar_height, 0, 0, 0, 0, 0, x, x + width - 1, 0, 0],
-                         X.PropModeReplace)
 
-    handling_configure_event = False
+    main_monitor = screen.get_primary_monitor()
+
+    for i, monitor in enumerate(monitors):
+        x = monitor.x
+        y = monitor.y
+        width = monitor.width
+        height = monitor.height
+
+        # Adjust y position to be below the status bar only for the main monitor
+        status_bar_height = 24  # Adjust this value as needed
+        if i == main_monitor:
+            y += status_bar_height
+
+        # Move and resize the window
+        window.move(x, y)
+        window.resize(width, data['bar_size'])
+
+        # Reserve space (a "strut") for the bar
+        strut_top = data['bar_size'] + (status_bar_height if i == main_monitor else 0)
+        topw.change_property(display.intern_atom('_NET_WM_STRUT'),
+                             display.intern_atom('CARDINAL'), 32,
+                             [0, 0, strut_top, 0],
+                             X.PropModeReplace)
+        topw.change_property(display.intern_atom('_NET_WM_STRUT_PARTIAL'),
+                             display.intern_atom('CARDINAL'), 32,
+                             [0, 0, strut_top, 0, 0, 0, 0, 0, x, x + width - 1, 0, 0],
+                             X.PropModeReplace)
 
 def main():
     print("Gtk %d.%d.%d" % (Gtk.get_major_version(),
@@ -69,6 +63,8 @@ def main():
     window.set_name("bar")
     window.set_type_hint(Gdk.WindowTypeHint.DOCK)
     window.set_decorated(False)
+    window.set_keep_above(True)  # Keep the window always on top
+    window.stick()  # Make the window visible on all workspaces
     window.connect("delete-event", Gtk.main_quit)
 
     # (b) Style it
