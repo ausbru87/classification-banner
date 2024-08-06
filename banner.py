@@ -40,7 +40,7 @@ def main ():
     message = "UNCLASSIFIED // FOUO"
     fgcolor = "#FFFFFF"
     bgcolor = "#007A33"
-    font = "Liberation-sans"
+    font = "liberation-sans"
     size = "large"
     weight = "bold"
 
