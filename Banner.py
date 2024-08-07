@@ -44,12 +44,35 @@ class Banner:
         self.window.add(center_label)
         self.window.show_all()
 
-        # Connect to the screen events
-        screen = Gdk.Screen.get_default()
-        screen.connect("monitors-changed", self.auto_resize)
-        screen.connect("size-changed", self.auto_resize)
+        # Initialize display and monitor
+        self.display = Display()
+        self.topw = self.display.create_resource_object('window',
+                                                        self.window.get_toplevel().get_window().get_xid())
+        self.monitor = Gdk.Display.get_default()
 
-    def auto_resize(self, event=None):
+    def move_and_resize(self, x, y, width):
+        # Move and resize the window
+        self.window.move(x, y)
+        self.window.resize(width, self.bar_size)
+
+        # Reserve space (a "strut") for the bar
+        strut_top = self.bar_size + self.STATUS_BAR_HEIGHT
+        topw = self.topw
+        display = topw.get_display()
+        topw.change_property(display.intern_atom('_NET_WM_STRUT'),
+                             display.intern_atom('CARDINAL'), 32,
+                             [0, 0, strut_top, 0],
+                             Gdk.PropMode.REPLACE)
+        topw.change_property(display.intern_atom('_NET_WM_STRUT_PARTIAL'),
+                             display.intern_atom('CARDINAL'), 32,
+                             [0, 0, strut_top, 0, 0, 0, 0, 0, x, x + width - 1, 0, 0],
+                             Gdk.PropMode.REPLACE)
+    
+    def auto_resize(self, screen):
+        # Implement the auto_resize logic here
+        pass
+
+    def auto_resize(self, display_resource, event=None):
         display = Display()
         topw = display.create_resource_object('window',
                                               self.window.get_toplevel().get_window().get_xid())
