@@ -44,10 +44,10 @@ class Banner:
 
         # Connect to the screen events
         screen = Gdk.Screen.get_default()
-        screen.connect("monitors-changed", self.on_configure_event)
-        screen.connect("size-changed", self.on_configure_event)
+        screen.connect("monitors-changed", self.auto_resize)
+        screen.connect("size-changed", self.auto_resize)
 
-    def on_configure_event(self, screen, event):
+    def auto_resize(self, event=None):
         display = Display()
         topw = display.create_resource_object('window',
                                               self.window.get_toplevel().get_window().get_xid())
