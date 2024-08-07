@@ -5,7 +5,7 @@ from Xlib.display import Display
 from Xlib import X
 
 class Banner:
-    STATUS_BAR_HEIGHT = 25
+    STATUS_BAR_HEIGHT = 26
 
     def __init__(self, message, fgcolor, bgcolor, font, size, weight, bar_size):
         self.bar_size = bar_size
