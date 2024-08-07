@@ -1,3 +1,4 @@
+from gi.repository import Gtk
 from banner import Banner
 
 def main():
