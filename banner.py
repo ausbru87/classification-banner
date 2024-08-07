@@ -85,7 +85,10 @@ def main():
     window.show_all()
 
     # Connect to the configure-event signal
-    window.connect("configure-event", on_configure_event, {'bar_size': bar_size})
+    screen = Gdk.Screen.get_default()
+    screen.connect("monitors-changed", on_configure_event, {'bar_size': bar_size})
+    screen.connect("size-changed", on_configure_event, {'bar_size': bar_size})
+    #window.connect("configure-event", on_configure_event, {'bar_size': bar_size})
 
     Gtk.main()
 
