@@ -1,7 +1,7 @@
 import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk, Gdk
-from Banner import Banner
+from BannerTest import Banner
 
 def main():
     # Initialize the banner values

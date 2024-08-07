@@ -7,8 +7,8 @@ from Xlib import X
 class Banner:
     STATUS_BAR_HEIGHT = 26
 
-    def __init__(self, message, fgcolor, bgcolor, font, size, weight, banner_height):
-        self.banner_height = banner_height
+    def __init__(self, message, fgcolor, bgcolor, font, size, weight, bar_size):
+        self.bar_size = bar_size
 
         # Create an undecorated dock
         self.window = Gtk.Window()
@@ -48,20 +48,31 @@ class Banner:
         self.display = Display()
         self.topw = self.display.create_resource_object('window',
                                                         self.window.get_toplevel().get_window().get_xid())
-        self.monitor = Gdk.Display.get_default()
+        # self.monitor = Gdk.Display.get_default()
         self.auto_resize()
 
     def auto_resize(self, event=None):
-        x = self.monitor.get_geometry().x
-        y = self.monitor.get_geometry().y
-        width = self.monitor.get_geometry().width
+        # display = Display()
+        # topw = display.create_resource_object('window',
+        #                                       self.window.get_toplevel().get_window().get_xid())
 
+        monitor = Gdk.Display.get_default().get_primary_monitor()
+        geometry = monitor.get_geometry()
+
+        x = geometry.x
+        y = geometry.y
+        width = geometry.width
+        height = geometry.height
+
+        # Adjust y position to be below the status bar only for the primary monitor
         y += self.STATUS_BAR_HEIGHT
 
+        # Move and resize the window
         self.window.move(x, y)
-        self.window.resize(width, self.banner_height)
+        self.window.resize(width, self.bar_size)
 
-        strut_top = self.banner_height + self.STATUS_BAR_HEIGHT
+        # Reserve space (a "strut") for the bar
+        strut_top = self.bar_size + self.STATUS_BAR_HEIGHT
         self.topw.change_property(self.display.intern_atom('_NET_WM_STRUT'),
                              self.display.intern_atom('CARDINAL'), 32,
                              [0, 0, strut_top, 0],
