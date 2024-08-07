@@ -1,7 +1,7 @@
 import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
-from banner import Banner
+from Banner import Banner
 
 def main():
     message = "UNCLASSIFIED // FOR OFFICIAL USE ONLY"
@@ -10,7 +10,7 @@ def main():
     font = "liberation-sans"
     size = "large"
     weight = "bold"
-    bar_size = 20
+    bar_size = 24
 
     banner = Banner(message, fgcolor, bgcolor, font, size, weight, bar_size)
     Gtk.main()
