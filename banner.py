@@ -61,7 +61,7 @@ def main():
     # Style the window
     css_provider = Gtk.CssProvider()
     css_provider.load_from_data(f"""
-    #bar {{
+    {{
         background-color: {bgcolor};
     }}
     """)
