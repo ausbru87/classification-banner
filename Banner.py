@@ -48,16 +48,13 @@ class Banner:
         self.display = Display()
         self.topw = self.display.create_resource_object('window',
                                                         self.window.get_toplevel().get_window().get_xid())
-        # self.monitor = Gdk.Display.get_default()
+        self.monitor = Gdk.Display.get_default()
         self.auto_resize()
 
     def auto_resize(self, event=None):
-        # display = Display()
-        # topw = display.create_resource_object('window',
-        #                                       self.window.get_toplevel().get_window().get_xid())
 
-        monitor = Gdk.Display.get_default().get_primary_monitor()
-        geometry = monitor.get_geometry()
+        # monitor = Gdk.Display.get_default().get_primary_monitor()
+        geometry = self.monitor.get_geometry()
 
         x = geometry.x
         y = geometry.y
