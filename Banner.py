@@ -48,13 +48,13 @@ class Banner:
         self.display = Display()
         self.topw = self.display.create_resource_object('window',
                                                         self.window.get_toplevel().get_window().get_xid())
-        self.monitor = Gdk.Display.get_default()
+        # self.monitor = Gdk.Display.get_default()
         self.auto_resize()
 
     def auto_resize(self, event=None):
-        display = Display()
-        topw = display.create_resource_object('window',
-                                              self.window.get_toplevel().get_window().get_xid())
+        # display = Display()
+        # topw = display.create_resource_object('window',
+        #                                       self.window.get_toplevel().get_window().get_xid())
 
         monitor = Gdk.Display.get_default().get_primary_monitor()
         geometry = monitor.get_geometry()
@@ -73,11 +73,11 @@ class Banner:
 
         # Reserve space (a "strut") for the bar
         strut_top = self.bar_size + self.STATUS_BAR_HEIGHT
-        topw.change_property(display.intern_atom('_NET_WM_STRUT'),
-                             display.intern_atom('CARDINAL'), 32,
+        self.topw.change_property(self.display.intern_atom('_NET_WM_STRUT'),
+                             self.display.intern_atom('CARDINAL'), 32,
                              [0, 0, strut_top, 0],
                              X.PropModeReplace)
-        topw.change_property(display.intern_atom('_NET_WM_STRUT_PARTIAL'),
-                             display.intern_atom('CARDINAL'), 32,
+        self.topw.change_property(self.display.intern_atom('_NET_WM_STRUT_PARTIAL'),
+                             self.display.intern_atom('CARDINAL'), 32,
                              [0, 0, strut_top, 0, 0, 0, 0, 0, x, x + width - 1, 0, 0],
                              X.PropModeReplace)
