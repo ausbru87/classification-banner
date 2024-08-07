@@ -4,7 +4,7 @@ from gi.repository import Gtk, Gdk
 from Xlib.display import Display
 from Xlib import X
 
-def on_configure_event(window, event, data):
+def on_size_allocate(window, allocation, data):
     # Adjust the window properties when resized or moved
     display = Display()
     topw = display.create_resource_object('window',
@@ -84,8 +84,8 @@ def main():
     window.add(center_label)
     window.show_all()
 
-    # Connect to the configure-event signal
-    window.connect("configure-event", on_configure_event, {'bar_size': bar_size})
+    # Connect to the size-allocate signal
+    window.connect("size-allocate", on_size_allocate, {'bar_size': bar_size})
 
     Gtk.main()
 
