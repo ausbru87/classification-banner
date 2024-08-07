@@ -1,3 +1,5 @@
+import gi
+gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk, Gdk
 from Xlib.display import Display
 from Xlib import X
@@ -7,9 +9,6 @@ class Banner:
 
     def __init__(self, message, fgcolor, bgcolor, font, size, weight, bar_size):
         self.bar_size = bar_size
-
-        # Initialize the display
-        self.display = Display()
 
         # Create an undecorated dock
         self.window = Gtk.Window()
@@ -45,39 +44,18 @@ class Banner:
         self.window.add(center_label)
         self.window.show_all()
 
-        # Initialize the screen and connect to the screen events
-        self.screen = Gdk.Screen.get_default()
-        self.screen.connect("monitors-changed", self.auto_resize)
-        self.screen.connect("size-changed", self.auto_resize)
-
-        # Set initial strut
-        self.set_strut()
-
+        # Connect to the screen events
+        screen = Gdk.Screen.get_default()
+        screen.connect("monitors-changed", self.auto_resize)
+        screen.connect("size-changed", self.auto_resize)
+    
     def set_strut(self):
-        topw = self.display.create_resource_object('window',
-                                                   self.window.get_toplevel().get_window().get_xid())
-
-        monitor = Gdk.Display.get_default().get_primary_monitor()
-        geometry = monitor.get_geometry()
-
-        x = geometry.x
-        y = geometry.y
-        width = geometry.width
-
-        # Reserve space (a "strut") for the bar
-        strut_top = self.bar_size + self.STATUS_BAR_HEIGHT
-        topw.change_property(self.display.intern_atom('_NET_WM_STRUT'),
-                             self.display.intern_atom('CARDINAL'), 32,
-                             [0, 0, strut_top, 0],
-                             X.PropModeReplace)
-        topw.change_property(self.display.intern_atom('_NET_WM_STRUT_PARTIAL'),
-                             self.display.intern_atom('CARDINAL'), 32,
-                             [0, 0, strut_top, 0, 0, 0, 0, 0, x, x + width - 1, 0, 0],
-                             X.PropModeReplace)
+        
 
     def auto_resize(self, event=None):
-        topw = self.display.create_resource_object('window',
-                                                   self.window.get_toplevel().get_window().get_xid())
+        display = Display()
+        topw = display.create_resource_object('window',
+                                              self.window.get_toplevel().get_window().get_xid())
 
         monitor = Gdk.Display.get_default().get_primary_monitor()
         geometry = monitor.get_geometry()
@@ -94,8 +72,16 @@ class Banner:
         self.window.move(x, y)
         self.window.resize(width, self.bar_size)
 
-        # Set strut after resizing
-        self.set_strut()
+        # Reserve space (a "strut") for the bar
+        strut_top = self.bar_size + self.STATUS_BAR_HEIGHT
+        topw.change_property(display.intern_atom('_NET_WM_STRUT'),
+                             display.intern_atom('CARDINAL'), 32,
+                             [0, 0, strut_top, 0],
+                             X.PropModeReplace)
+        topw.change_property(display.intern_atom('_NET_WM_STRUT_PARTIAL'),
+                             display.intern_atom('CARDINAL'), 32,
+                             [0, 0, strut_top, 0, 0, 0, 0, 0, x, x + width - 1, 0, 0],
+                             X.PropModeReplace)
 
 def main():
     print("Gtk %d.%d.%d" % (Gtk.get_major_version(),
