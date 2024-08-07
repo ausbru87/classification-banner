@@ -7,8 +7,8 @@ from Xlib import X
 class Banner:
     STATUS_BAR_HEIGHT = 26
 
-    def __init__(self, message, fgcolor, bgcolor, font, size, weight, bar_size):
-        self.bar_size = bar_size
+    def __init__(self, message, fgcolor, bgcolor, font, size, weight, banner_height):
+        self.banner_height = banner_height
 
         # Create an undecorated dock
         self.window = Gtk.Window()
@@ -65,10 +65,10 @@ class Banner:
 
         # Move and resize the window
         self.window.move(x, y)
-        self.window.resize(width, self.bar_size)
+        self.window.resize(width, self.banner_height)
 
         # Reserve space (a "strut") for the bar
-        strut_top = self.bar_size + self.STATUS_BAR_HEIGHT
+        strut_top = self.banner_height + self.STATUS_BAR_HEIGHT
         self.topw.change_property(self.display.intern_atom('_NET_WM_STRUT'),
                              self.display.intern_atom('CARDINAL'), 32,
                              [0, 0, strut_top, 0],
