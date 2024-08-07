@@ -48,9 +48,6 @@ class Banner:
         screen = Gdk.Screen.get_default()
         screen.connect("monitors-changed", self.auto_resize)
         screen.connect("size-changed", self.auto_resize)
-    
-    def set_strut(self):
-        
 
     def auto_resize(self, event=None):
         display = Display()
