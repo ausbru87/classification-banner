@@ -4,13 +4,13 @@ from gi.repository import Gtk
 from banner import Banner
 
 def main():
-    message = "Hello, World!"
+    message = "UNCLASSIFIED // FOR OFFICIAL USE ONLY"
     fgcolor = "#FFFFFF"
     bgcolor = "#007A33"
-    font = "Sans"
+    font = "liberation-sans"
     size = "large"
     weight = "bold"
-    bar_size = 24
+    bar_size = 20
 
     banner = Banner(message, fgcolor, bgcolor, font, size, weight, bar_size)
     Gtk.main()
