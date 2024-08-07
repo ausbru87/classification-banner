@@ -4,7 +4,7 @@ from gi.repository import Gtk, Gdk
 from Xlib.display import Display
 from Xlib import X
 
-def on_size_allocate(window, allocation, data):
+def on_configure_event(window, event, data):
     # Adjust the window properties when resized or moved
     display = Display()
     topw = display.create_resource_object('window',
@@ -57,33 +57,35 @@ def main():
     window.set_decorated(False)
     window.set_keep_above(True)  # Keep the window always on top
     window.stick()  # Make the window visible on all workspaces
+    window.connect("delete-event", Gtk.main_quit)
 
-    # Style the window
-    css_provider = Gtk.CssProvider()
-    css_provider.load_from_data(f"""
-    {{
-        background-color: {bgcolor};
-    }}
+    # (b) Style it
+    style_provider = Gtk.CssProvider()
+    style_provider.load_from_data(b"""
+    #bar {
+        background-color: #007A33;
+    }
     """)
     Gtk.StyleContext.add_provider_for_screen(
-        Gdk.Screen.get_default(),
-        css_provider,
-        Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
-    )
+        Gdk.Display.get_default().get_default_screen(),
+        style_provider,
+        Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
 
-    # Add a label to the center of the bar
-    label = Gtk.Label()
-    label.set_markup(f"<span font_family='{font}' weight='{weight}' foreground='{fgcolor}' size='{size}'>{message}</span>")
-    label.set_justify(Gtk.Justification.CENTER)
-    label.set_yalign(0.5)
-    label.set_xalign(0.5)
-    label.set_hexpand(True)
-    label.set_vexpand(True)
-    window.add(label)
+    # (b) Add a label to the center of the bar
+    center_label = Gtk.Label()
+    center_label.set_markup(
+        "<span font_family='%s' weight='%s' foreground='%s' size='%s'>%s</span>" % (
+            font, weight, fgcolor, size, message))
+    center_label.set_justify(Gtk.Justification.CENTER)
+    center_label.set_yalign(0.5)
+    center_label.set_xalign(0.5)
+    center_label.set_hexpand(True)
+    center_label.set_vexpand(True)
+    window.add(center_label)
     window.show_all()
 
-    # Connect the size allocate signal
-    window.connect("size-allocate", on_size_allocate, {'bar_size': bar_size})
+    # Connect to the configure-event signal
+    window.connect("configure-event", on_configure_event, {'bar_size': bar_size})
 
     Gtk.main()
 
