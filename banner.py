@@ -5,6 +5,8 @@ from Xlib.display import Display
 from Xlib import X
 
 class Banner:
+    STATUS_BAR_HEIGHT = 24
+
     def __init__(self, message, fgcolor, bgcolor, font, size, weight, bar_size):
         self.bar_size = bar_size
 
@@ -61,15 +63,14 @@ class Banner:
         height = geometry.height
 
         # Adjust y position to be below the status bar only for the primary monitor
-        status_bar_height = 24  # Adjust this value as needed
-        y += status_bar_height
+        y += self.STATUS_BAR_HEIGHT
 
         # Move and resize the window
         self.window.move(x, y)
         self.window.resize(width, self.bar_size)
 
         # Reserve space (a "strut") for the bar
-        strut_top = self.bar_size + status_bar_height
+        strut_top = self.bar_size + self.STATUS_BAR_HEIGHT
         topw.change_property(display.intern_atom('_NET_WM_STRUT'),
                              display.intern_atom('CARDINAL'), 32,
                              [0, 0, strut_top, 0],
