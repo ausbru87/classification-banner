@@ -1,1 +1,1 @@
-# classification-banner
+# Gnome Desktop Banner
