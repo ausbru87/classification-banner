@@ -106,6 +106,7 @@ class MultiWindowBanner(Banner):
     def create_banners(self):
         display = Gdk.Display.get_default()
         num_monitors = display.get_n_monitors()
+        self.banners.clear()
 
         for i in range(num_monitors):
             monitor = display.get_monitor(i)
@@ -116,7 +117,6 @@ class MultiWindowBanner(Banner):
             print(f"Created banner for monitor {i}")
 
     def resize_banners(self, event=None):
-        self.banners.clear()
         self.create_banners()
         for banner in self.banners:
             banner.auto_resize()
