@@ -2,7 +2,7 @@ import gi
 import argparse
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk, Gdk
-from Banner import Banner, USGClassificationBanner
+from usg_classification_banner import USGClassificationBanner
 
 
 

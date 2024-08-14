@@ -6,7 +6,7 @@ from Xlib import X
 
 class Banner:
 
-    def __init__(self, fgcolor, bgcolor, font, size, font_weight, banner_height, vertical_offset=0, message=""):
+    def __init__(self, fgcolor, bgcolor, font, size, font_weight, banner_height, vertical_offset = 0, message=""):
         self.banner_height = banner_height
         self.message = message
         self.fgcolor = fgcolor
@@ -85,3 +85,27 @@ class Banner:
                              self.display.intern_atom('CARDINAL'), 32,
                              [0, 0, strut_top, 0, 0, 0, 0, 0, x, x + width - 1, 0, 0],
                              X.PropModeReplace)
+
+class USGClassificationBanner(Banner):
+    classification_colors = {
+        # CLASSIFICATION: (MESSAGE, TEXT_COLOR, BANNER_COLOR)
+        "U": ("UNCLASSIFIED", "#FFFFFF", "#007A33"),
+        "U_FOUO": ("UNCLASSIFIED//FOUO", "#FFFFFF", "#007A33"),
+        "C": ("CONFIDENTIAL", "#FFFFFF", "#0000FF"),
+        "S": ("SECRET", "#FFFFFF", "#FF0000"),
+        "TS": ("TOP SECRET", "#FFFFFF", "#FF8C00"),
+        "TS_REL": ("TOP SECRET//REL TO USA, FVEY", "#000000", "#FFFF00"),
+        "TS_NF": ("TOP SECRET//SI/TK//NOFORN", "#000000", "#FFFF00"),
+    }
+
+    def __init__(self, classification, vertical_offset=0):
+        if classification not in self.classification_colors:
+            raise ValueError(f"Invalid classification: {classification}")
+
+        message, fgcolor, bgcolor = self.classification_colors[classification]
+        font = "liberation-sans"
+        size = "medium"
+        weight = "bold"
+        banner_height = 22
+
+        super().__init__(fgcolor, bgcolor, font, size, weight, banner_height, vertical_offset, message)
