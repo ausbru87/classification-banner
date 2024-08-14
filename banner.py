@@ -100,23 +100,30 @@ class MultiWindowBanner(Banner):
         self.size = size
         self.font_weight = font_weight
         self.banner_height = banner_height
-        self.banners = []
+        self.banners = {}
         self.create_banners()
 
     def create_banners(self):
         display = Gdk.Display.get_default()
         num_monitors = display.get_n_monitors()
-        self.banners.clear()
 
         for i in range(num_monitors):
-            monitor = display.get_monitor(i)
-            is_primary = display.get_primary_monitor() == monitor
-            voffset = self.all_monitor_voffset + (self.GNOME_MAIN_BAR_HEIGHT if is_primary else 0)
-            banner = Banner(self.fgcolor, self.bgcolor, self.font, self.size, self.font_weight, self.banner_height, monitor, voffset, self.message)
-            self.banners.append(banner)
-            print(f"Created banner for monitor {i}")
+            self.create_banner(display, i)
+
+    def create_banner(self, display, monitor_index):
+        monitor = display.get_monitor(monitor_index)
+        is_primary = display.get_primary_monitor() == monitor
+        voffset = self.all_monitor_voffset + (self.GNOME_MAIN_BAR_HEIGHT if is_primary else 0)
+        banner = Banner(self.fgcolor, self.bgcolor, self.font, self.size, self.font_weight, self.banner_height, monitor, voffset, self.message)
+        self.banners[monitor_index] = banner
+        print(f"Created banner for monitor {monitor_index}")
 
     def resize_banners(self, event=None):
-        self.create_banners()
-        for banner in self.banners:
-            banner.auto_resize()
+        display = Gdk.Display.get_default()
+        num_monitors = display.get_n_monitors()
+
+        for i in range(num_monitors):
+            if i not in self.banners or self.banners[i] is None:
+                self.create_banner(display, i)
+            else:
+                self.banners[i].auto_resize()
