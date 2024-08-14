@@ -90,7 +90,7 @@ class USGClassificationBanner(Banner):
     classification_colors = {
         # CLASSIFICATION: (MESSAGE, TEXT_COLOR, BANNER_COLOR)
         "U": ("UNCLASSIFIED", "#FFFFFF", "#007A33"),
-        "U_FOUO": ("UNCLASSIFIED//FOUO", "#000000", "#9ACD32"),
+        "U_FOUO": ("UNCLASSIFIED//FOUO", "#000000", "#007A33"),
         "C": ("CONFIDENTIAL", "#FFFFFF", "#0000FF"),
         "S": ("SECRET", "#FFFFFF", "#FF0000"),
         "TS": ("TOP SECRET", "#FFFFFF", "#FF8C00"),
