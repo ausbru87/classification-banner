@@ -30,9 +30,9 @@ class Banner:
         style_provider = Gtk.CssProvider()
         style_provider.load_from_data(b"""
         #bar {
-            background-color: %s;
+            background-color: {};
         }
-        """), (self.bgcolor)
+        """).format(self.bgcolor)
         Gtk.StyleContext.add_provider_for_screen(
             Gdk.Display.get_default().get_default_screen(),
             style_provider,
