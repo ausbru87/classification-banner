@@ -88,19 +88,11 @@ class Banner:
                                   [0, 0, strut_top, 0, 0, 0, 0, 0, x, x + width - 1, 0, 0],
                                   X.PropModeReplace)
 
-class MultiWindowBanner:
+class MultiWindowBanner(Banner):
     GNOME_MAIN_BAR_HEIGHT = 26
 
     def __init__(self, fgcolor, bgcolor, font, size, font_weight, banner_height, all_monitor_voffset=0, message=""):
-        self.message = message
-        self.bgcolor = bgcolor
-        self.fgcolor = fgcolor
-        self.font = font
-        self.font_weight = font_weight
-        self.size = size
-        self.banner_height = banner_height
-        self.all_monitor_voffset = all_monitor_voffset
-
+        super().__init__(fgcolor, bgcolor, font, size, font_weight, banner_height, all_monitor_voffset, message)
         self.banners = []
         self.create_banners()
 
