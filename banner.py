@@ -112,5 +112,5 @@ class MultiWindowBanner:
             monitor = display.get_monitor(i)
             is_primary = display.get_primary_monitor() == monitor
             voffset = self.all_monitor_voffset + (self.GNOME_MAIN_BAR_HEIGHT if is_primary else 0)
-            banner = Banner(self.message, self.bgcolor, self.fgcolor, self.font, self.font_weight, self.size, self.banner_height, voffset)
+            banner = Banner(self.fgcolor, self.bgcolor, self.font, self.size, self.font_weight, self.banner_height, voffset, self.message)
             self.banners.append(banner)
