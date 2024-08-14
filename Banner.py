@@ -104,7 +104,7 @@ class USGClassificationBanner(Banner):
 
         message, fgcolor, bgcolor = self.classification_colors[classification]
         font = "liberation-sans"
-        size = "large"
-        weight = "bold"
+        size = "small"
+        weight = "regular"
 
         super().__init__(fgcolor, bgcolor, font, size, weight, banner_height, vertical_offset, message)
