@@ -1,20 +1,18 @@
 import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk, Gdk
-from Banner import Banner
+from Banner import Banner, USGClassificationBanner
+
+
 
 def main():
     # Initialize the banner values
-    message = "UNCLASSIFIED // FOR OFFICIAL USE ONLY"
-    fgcolor = "#FFFFFF"
-    bgcolor = "#007A33"
-    font = "liberation-sans"
-    size = "large"
-    weight = "bold"
+    classification = "U_FOUO"
     bar_size = 24
+    vertical_offset = 26 # Offset from the top of the screen for GNOME main bar
 
     # Initialize the banner
-    banner = Banner(message, fgcolor, bgcolor, font, size, weight, bar_size)
+    banner = USGClassificationBanner(classification, bar_size, vertical_offset)
 
     # Connect to the screen events
     screen = Gdk.Screen.get_default()
