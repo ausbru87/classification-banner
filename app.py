@@ -1,13 +1,13 @@
 import gi
+import argparse
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk, Gdk
 from Banner import Banner, USGClassificationBanner
 
 
 
-def main():
+def main(classification):
     # Initialize the banner values
-    classification = "U_FOUO"
     bar_size = 24
     vertical_offset = 26 # Offset from the top of the screen for GNOME main bar
 
@@ -23,4 +23,8 @@ def main():
     Gtk.main()
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(description="GNOME Desktop Banner")
+    parser.add_argument("classification", type=str, help="The classification level for the banner")
+    args = parser.parse_args()
+
+    main(args.classification)
