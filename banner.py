@@ -93,7 +93,13 @@ class MultiWindowBanner(Banner):
 
     def __init__(self, fgcolor, bgcolor, font, size, font_weight, banner_height, all_monitor_voffset=0, message=""):
         self.all_monitor_voffset = all_monitor_voffset
-        super().__init__(fgcolor, bgcolor, font, size, font_weight, banner_height, message)
+        self.message = message
+        self.fgcolor = fgcolor
+        self.bgcolor = bgcolor
+        self.font = font
+        self.size = size
+        self.font_weight = font_weight
+        self.banner_height = banner_height
         self.banners = []
         self.create_banners()
 
