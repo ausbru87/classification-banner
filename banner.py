@@ -114,6 +114,6 @@ class MultiWindowBanner(Banner):
             banner = Banner(self.fgcolor, self.bgcolor, self.font, self.size, self.font_weight, self.banner_height, voffset, self.message)
             self.banners.append(banner)
 
-    def resize_banners(self):
+    def resize_banners(self, event=None):
         for banner in self.banners:
             banner.auto_resize()
