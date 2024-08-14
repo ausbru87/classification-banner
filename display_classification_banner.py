@@ -9,7 +9,7 @@ from usg_classification_banner import USGClassificationBanner
 def main(classification):
     # Initialize the banner values
     bar_size = 24
-    vertical_offset = 26 # Offset from the top of the screen for GNOME main bar
+    #vertical_offset = 26 # Offset from the top of the screen for GNOME main bar
 
     # Initialize the banner
     banner = USGClassificationBanner(classification, vertical_offset)
