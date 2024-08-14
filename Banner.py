@@ -98,7 +98,7 @@ class USGClassificationBanner(Banner):
         "TS_NF": ("TOP SECRET//SI/TK//NOFORN", "#000000", "#FFFF00"),
     }
 
-    def __init__(self, classification, banner_height, vertical_offset=0):
+    def __init__(self, classification, vertical_offset=0):
         if classification not in self.classification_colors:
             raise ValueError(f"Invalid classification: {classification}")
 
@@ -106,5 +106,6 @@ class USGClassificationBanner(Banner):
         font = "liberation-sans"
         size = "medium"
         weight = "bold"
+        banner_height = 22
 
         super().__init__(fgcolor, bgcolor, font, size, weight, banner_height, vertical_offset, message)
