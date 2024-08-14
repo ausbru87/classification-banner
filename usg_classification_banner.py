@@ -15,11 +15,12 @@ class USGClassificationBanner(MultiWindowBanner):
     def __init__(self, classification, vertical_offset=0):
         if classification not in self.classification_colors:
             raise ValueError(f"Invalid classification: {classification}")
-
-        message, fgcolor, bgcolor = self.classification_colors[classification]
+        self.classofication = classification
+        self.vertical_offset = vertical_offset
+        message, fgcolor, bgcolor = self.classification_colors[self.classification]
         font = "liberation-sans"
         size = "medium"
         weight = "bold"
         banner_height = 22
 
-        super().__init__(fgcolor, bgcolor, font, size, weight, banner_height, vertical_offset, message)
+        super().__init__(fgcolor, bgcolor, font, size, weight, banner_height, self.vertical_offset, message)
