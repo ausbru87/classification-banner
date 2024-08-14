@@ -101,27 +101,7 @@ class MultiWindowBanner(Banner):
         self.font_weight = font_weight
         self.banner_height = banner_height
         self.banners = {}
-        self.gnome_banner_height = 0
         self.create_banners()
-    
-    def get_gnome_status_bar_height(self):
-        # Initialize GTK
-        Gtk.init([])
-
-        # Get the default screen
-        screen = Gdk.Screen.get_default()
-
-        # Get the monitor geometry
-        monitor = screen.get_monitor_geometry(0)
-
-        # Extract the height of the status bar
-        monitor_height = monitor.height
-        screen_height = screen.get_height()
-
-        # The status bar height is the difference between the screen height and monitor height
-        status_bar_height = screen_height - monitor_height
-        print(status_bar_height)
-        self.gnome_banner_height = status_bar_height
 
     def create_banners(self):
         display = Gdk.Display.get_default()
@@ -133,7 +113,7 @@ class MultiWindowBanner(Banner):
     def create_banner(self, display, monitor_index):
         monitor = display.get_monitor(monitor_index)
         is_primary = display.get_primary_monitor() == monitor
-        voffset = self.all_monitor_voffset + (self.gnome_banner_height if is_primary else 0)
+        voffset = self.all_monitor_voffset + (self.GNOME_MAIN_BAR_HEIGHT if is_primary else 0)
         banner = Banner(self.fgcolor, self.bgcolor, self.font, self.size, self.font_weight, self.banner_height, monitor, voffset, self.message)
         self.banners[monitor_index] = banner
         print(f"Created banner for monitor {monitor_index}")
