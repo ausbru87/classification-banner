@@ -6,7 +6,7 @@ from Xlib import X
 
 class Banner:
 
-    def __init__(self, fgcolor, bgcolor, font, size, font_weight, banner_height, vertical_offset=0, message=""):
+    def __init__(self, fgcolor, bgcolor, font, size, font_weight, banner_height, monitor, vertical_offset=0, message=""):
         self.vertical_offset = vertical_offset
         self.bgcolor = bgcolor
         self.font = font
@@ -15,6 +15,7 @@ class Banner:
         self.size = size
         self.message = message
         self.banner_height = banner_height
+        self.monitor = monitor
 
         self.initialize_window()
         self.apply_styles()
@@ -63,8 +64,7 @@ class Banner:
         self.auto_resize()
 
     def auto_resize(self, event=None):
-        monitor = Gdk.Display.get_default().get_primary_monitor()
-        geometry = monitor.get_geometry()
+        geometry = self.monitor.get_geometry()
 
         x = geometry.x
         y = geometry.y
@@ -112,7 +112,7 @@ class MultiWindowBanner(Banner):
             monitor = display.get_monitor(i)
             is_primary = display.get_primary_monitor() == monitor
             voffset = self.all_monitor_voffset + (self.GNOME_MAIN_BAR_HEIGHT if is_primary else 0)
-            banner = Banner(self.fgcolor, self.bgcolor, self.font, self.size, self.font_weight, self.banner_height, voffset, self.message)
+            banner = Banner(self.fgcolor, self.bgcolor, self.font, self.size, self.font_weight, self.banner_height, monitor, voffset, self.message)
             self.banners.append(banner)
             print(f"Created banner for monitor {i}")
 
