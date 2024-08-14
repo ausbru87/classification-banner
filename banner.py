@@ -117,6 +117,6 @@ class MultiWindowBanner(Banner):
             print(f"Created banner for monitor {i}")
 
     def resize_banners(self, event=None):
-        self.create_banners()
+        # self.create_banners()
         for banner in self.banners:
             banner.auto_resize()
