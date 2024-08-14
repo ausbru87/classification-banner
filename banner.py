@@ -113,3 +113,7 @@ class MultiWindowBanner(Banner):
             voffset = self.all_monitor_voffset + (self.GNOME_MAIN_BAR_HEIGHT if is_primary else 0)
             banner = Banner(self.fgcolor, self.bgcolor, self.font, self.size, self.font_weight, self.banner_height, voffset, self.message)
             self.banners.append(banner)
+
+    def resize_banners(self):
+        for banner in self.banners:
+            banner.auto_resize()
