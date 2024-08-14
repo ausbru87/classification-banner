@@ -7,26 +7,30 @@ from Xlib import X
 class Banner:
 
     def __init__(self, fgcolor, bgcolor, font, size, font_weight, banner_height, vertical_offset=0, message=""):
-        self.banner_height = banner_height
-        self.message = message
-        self.fgcolor = fgcolor
+        self.vertical_offset = vertical_offset
         self.bgcolor = bgcolor
         self.font = font
-        self.size = size
         self.font_weight = font_weight
+        self.fgcolor = fgcolor
+        self.size = size
+        self.message = message
         self.banner_height = banner_height
-        self.vertical_offset = vertical_offset
 
-        # Create an undecorated dock
+        self.initialize_window()
+        self.apply_styles()
+        self.add_label()
+        self.initialize_display()
+
+    def initialize_window(self):
         self.window = Gtk.Window()
         self.window.set_name("bar")
         self.window.set_type_hint(Gdk.WindowTypeHint.DOCK)
         self.window.set_decorated(False)
-        self.window.set_keep_above(True)  # Keep the window always on top
-        self.window.stick()  # Make the window visible on all workspaces
+        self.window.set_keep_above(True)
+        self.window.stick()
         self.window.connect("delete-event", Gtk.main_quit)
 
-        # Style it
+    def apply_styles(self):
         style_provider = Gtk.CssProvider()
         css_data = b"""
         #bar {
@@ -39,7 +43,7 @@ class Banner:
             style_provider,
             Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
 
-        # Add a label to the center of the bar
+    def add_label(self):
         center_label = Gtk.Label()
         center_label.set_markup(
             "<span font_family='%s' font_weight='%s' foreground='%s' size='%s'>%s</span>" % (
@@ -52,21 +56,19 @@ class Banner:
         self.window.add(center_label)
         self.window.show_all()
 
-        # Initialize display and monitor
+    def initialize_display(self):
         self.display = Display()
         self.topw = self.display.create_resource_object('window',
                                                         self.window.get_toplevel().get_window().get_xid())
         self.auto_resize()
 
     def auto_resize(self, event=None):
-
         monitor = Gdk.Display.get_default().get_primary_monitor()
         geometry = monitor.get_geometry()
 
         x = geometry.x
         y = geometry.y
         width = geometry.width
-        #height = geometry.height (REMOVING TO SEE IF IT IS NEEDED)
 
         # Adjust y position to be below the status bar only for the primary monitor
         y += self.vertical_offset
@@ -78,10 +80,37 @@ class Banner:
         # Reserve space (a "strut") for the bar
         strut_top = self.banner_height + self.vertical_offset
         self.topw.change_property(self.display.intern_atom('_NET_WM_STRUT'),
-                             self.display.intern_atom('CARDINAL'), 32,
-                             [0, 0, strut_top, 0],
-                             X.PropModeReplace)
+                                  self.display.intern_atom('CARDINAL'), 32,
+                                  [0, 0, strut_top, 0],
+                                  X.PropModeReplace)
         self.topw.change_property(self.display.intern_atom('_NET_WM_STRUT_PARTIAL'),
-                             self.display.intern_atom('CARDINAL'), 32,
-                             [0, 0, strut_top, 0, 0, 0, 0, 0, x, x + width - 1, 0, 0],
-                             X.PropModeReplace)
+                                  self.display.intern_atom('CARDINAL'), 32,
+                                  [0, 0, strut_top, 0, 0, 0, 0, 0, x, x + width - 1, 0, 0],
+                                  X.PropModeReplace)
+
+class MultiWindowBanner:
+    GNOME_MAIN_BAR_HEIGHT = 26
+
+    def __init__(self, message, bgcolor, fgcolor, font, font_weight, size, banner_height, all_monitor_voffset=0):
+        self.message = message
+        self.bgcolor = bgcolor
+        self.fgcolor = fgcolor
+        self.font = font
+        self.font_weight = font_weight
+        self.size = size
+        self.banner_height = banner_height
+        self.all_monitor_voffset = all_monitor_voffset
+
+        self.banners = []
+        self.create_banners()
+
+    def create_banners(self):
+        display = Gdk.Display.get_default()
+        num_monitors = display.get_n_monitors()
+
+        for i in range(num_monitors):
+            monitor = display.get_monitor(i)
+            is_primary = display.get_primary_monitor() == monitor
+            voffset = self.all_monitor_voffset + (self.GNOME_MAIN_BAR_HEIGHT if is_primary else 0)
+            banner = Banner(self.message, self.bgcolor, self.fgcolor, self.font, self.font_weight, self.size, self.banner_height, voffset)
+            self.banners.append(banner)
