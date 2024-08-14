@@ -13,8 +13,8 @@ def main(classification):
 
     # Connect to the screen events
     screen = Gdk.Screen.get_default()
-    screen.connect("monitors-changed", banner.auto_resize)
-    screen.connect("size-changed", banner.auto_resize)
+    screen.connect("monitors-changed", banner.resize_banners)
+    screen.connect("size-changed", banner.resize_banners)
 
     # Run the Gtk main loop
     Gtk.main()
