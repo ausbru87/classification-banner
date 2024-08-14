@@ -91,7 +91,7 @@ class Banner:
 class MultiWindowBanner:
     GNOME_MAIN_BAR_HEIGHT = 26
 
-    def __init__(self, message, bgcolor, fgcolor, font, font_weight, size, banner_height, all_monitor_voffset=0):
+    def __init__(self, fgcolor, bgcolor, font, size, font_weight, banner_height, all_monitor_voffset=0, message=""):
         self.message = message
         self.bgcolor = bgcolor
         self.fgcolor = fgcolor

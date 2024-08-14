@@ -1,6 +1,6 @@
-from banner import Banner
+from banner import MultiWindowBanner
 
-class USGClassificationBanner(Banner):
+class USGClassificationBanner(MultiWindowBanner):
     classification_colors = {
         # CLASSIFICATION: (MESSAGE, TEXT_COLOR, BANNER_COLOR)
         "U": ("UNCLASSIFIED", "#FFFFFF", "#007A33"),
