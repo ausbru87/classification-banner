@@ -12,7 +12,7 @@ def main(classification):
     vertical_offset = 26 # Offset from the top of the screen for GNOME main bar
 
     # Initialize the banner
-    banner = USGClassificationBanner(classification, bar_size, vertical_offset)
+    banner = USGClassificationBanner(classification, vertical_offset)
 
     # Connect to the screen events
     screen = Gdk.Screen.get_default()
