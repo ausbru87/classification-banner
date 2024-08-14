@@ -120,7 +120,7 @@ class MultiWindowBanner(Banner):
 
         # The status bar height is the difference between the screen height and monitor height
         status_bar_height = screen_height - monitor_height
-
+        print(status_bar_height)
         self.gnome_banner_height = status_bar_height
 
     def create_banners(self):
