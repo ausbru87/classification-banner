@@ -1,0 +1,26 @@
+[
+    {
+        "banner_type": "classification",
+        "banner_subtype": "U_FOUO"
+    },
+    {
+        "banner_type": "custom",
+        "fgcolor": "#000000",
+        "bgcolor": "#00BFFF",
+        "font": "liberation-sans",
+        "font_size": "medium",
+        "font_weight": "bold",
+        "banner_height": 22,
+        "message": "GitLab and Jira Scheduled Maintenance 08-23-2024 0500 ET"
+    },
+    {
+        "banner_type": "custom",
+        "fgcolor": "#FFFFFF",
+        "bgcolor": "#8B0000",
+        "font": "liberation-sans",
+        "font_size": "medium",
+        "font_weight": "bold",
+        "banner_height": 22,
+        "message": "SYSTEM OUTAGE -- Expected Recovery time08-23-2024 0500 ET"
+    }
+]
