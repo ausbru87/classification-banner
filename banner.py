@@ -16,6 +16,7 @@ class Banner:
         self.message = message
         self.banner_height = banner_height
         self.monitor = monitor
+        self.lower_boundary = None
 
         self.initialize_window()
         self.apply_styles()
@@ -72,6 +73,8 @@ class Banner:
 
         # Adjust y position to be below the status bar only for the primary monitor
         y += self.vertical_offset
+
+        self.lower_boundary = y + self.banner_height
 
         # Move and resize the window
         self.window.move(x, y)

@@ -3,13 +3,13 @@ from banner import MultiWindowBanner
 class USGClassificationBanner(MultiWindowBanner):
     classification_colors = {
         # CLASSIFICATION: (MESSAGE, TEXT_COLOR, BANNER_COLOR)
-        "U": ("UNCLASSIFIED", "#FFFFFF", "#007A33"),
-        "U_FOUO": ("UNCLASSIFIED//FOUO", "#FFFFFF", "#007A33"),
-        "C": ("CONFIDENTIAL", "#FFFFFF", "#0000FF"),
-        "S": ("SECRET", "#FFFFFF", "#FF0000"),
-        "TS": ("TOP SECRET", "#FFFFFF", "#FF8C00"),
-        "TS_REL": ("TOP SECRET//REL TO USA, FVEY", "#000000", "#FFFF00"),
-        "TS_NF": ("TOP SECRET//SI/TK//NOFORN", "#000000", "#FFFF00"),
+        "u": ("UNCLASSIFIED", "#FFFFFF", "#007A33"),
+        "u_fouo": ("UNCLASSIFIED//FOUO", "#FFFFFF", "#007A33"),
+        "c": ("CONFIDENTIAL", "#FFFFFF", "#0000FF"),
+        "s": ("SECRET", "#FFFFFF", "#FF0000"),
+        "ts": ("TOP SECRET", "#FFFFFF", "#FF8C00"),
+        "ts_rel": ("TOP SECRET//REL TO USA, FVEY", "#000000", "#FFFF00"),
+        "ts_nf": ("TOP SECRET//SI/TK//NOFORN", "#000000", "#FFFF00"),
     }
 
     def __init__(self, classification, vertical_offset=0):

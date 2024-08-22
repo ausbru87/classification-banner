@@ -1,0 +1,22 @@
+[
+    {
+        "banner_type": "classification",
+        "banner_subtype": "u",
+        "override_banner_height": 25,
+        "override_fgcolor": "#FFFFFF",
+        "override_bgcolor": "#000000",
+        "override_font_size": "medium",
+        "override_font_weight": "bold",
+        "vertical_offset": 1000
+    },
+    {
+        "banner_type": "classification",
+        "banner_subtype": "c",
+        "override_banner_height": 25,
+        "override_fgcolor": "#FFFFFF",
+        "override_bgcolor": "#000000",
+        "override_font_size": "medium",
+        "override_font_weight": "bold",
+        "vertical_offset": 1000
+    }
+]

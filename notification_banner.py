@@ -3,9 +3,9 @@ from banner import MultiWindowBanner
 class NotificationBanner(MultiWindowBanner):
     notification_colors = {
         # NOTIFICATION TYPE: (MESSAGE, TEXT_COLOR, BANNER_COLOR)
-        "SCHEDULED_EVENT": ("SCHEDULED EVENT", "#FFFFFF", "#00BFFF"),  # Deep Sky Blue
-        "SYSTEM_OUTAGE": ("SYSTEM OUTAGE", "#FFFFFF", "#8B0000"),  # Dark Red
-        "END_OF_LIFE": ("END OF LIFE NOTICE", "#FFFFFF", "#8B4513")  # Saddle Brown
+        "scheduled_event": ("SCHEDULED EVENT", "#FFFFFF", "#00BFFF"),  # Deep Sky Blue
+        "system_outage": ("SYSTEM OUTAGE", "#FFFFFF", "#8B0000"),  # Dark Red
+        "end_of_life": ("END OF LIFE NOTICE", "#FFFFFF", "#8B4513")  # Saddle Brown
     }
 
     def __init__(self, classification, vertical_offset=0):
